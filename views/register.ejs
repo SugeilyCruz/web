@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Registro - Gestión de Tareas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h2>Registro</h2>
+    <form action="/register" method="POST">
+      <div class="input-field">
+        <input type="text" name="username" required>
+        <label for="username">Username</label>
+      </div>
+      <div class="input-field">
+        <input type="password" name="password" required>
+        <label for="password">Password</label>
+      </div>
+      <div class="input-field">
+        <input type="password" name="password2" required>
+        <label for="password2">Confirm Password</label>
+      </div>
+      <button class="btn waves-effect waves-light" type="submit">Registrarse</button>
+    </form>
+    <% if (errors && errors.length > 0) { %> <!-- Verificar si errors está definido y tiene longitud -->
+      <% errors.forEach(error => { %>
+        <div class="card-panel red">
+          <span class="white-text"><%= error.msg %></span>
+        </div>
+      <% }) %>
+    <% } %>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+</html>

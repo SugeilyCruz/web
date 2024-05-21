@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Tareas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .logout-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Lista de Tareas</h1>
+    <!-- Botón de Cerrar Sesión -->
+    <a href="/logout" class="btn waves-effect waves-light red logout-btn">Cerrar Sesión</a>
+    <ul class="collection">
+      <% tasks.forEach(task => { %>
+        <li class="collection-item <%= task.status === 1 ? 'completed' : '' %>">
+          <form action="/tasks/edit/<%= task.id %>" method="POST">
+            <div class="input-field">
+              <input type="text" name="title" value="<%= task.title %>" required>
+            </div>
+            <div class="input-field">
+              <textarea name="description" class="materialize-textarea" required><%= task.description %></textarea>
+            </div>
+            <label>
+              <!-- Checkbox para marcar la tarea como completada -->
+              <input type="checkbox" name="completed" <%= task.status === 1 ? 'checked' : '' %> onchange="toggleTaskCompletion(this)" />
+              <span>Completada</span>
+            </label>
+            <button class="btn waves-effect waves-light" type="submit">Guardar</button>
+          </form>
+          <!-- Formulario separado para eliminar la tarea -->
+          <form action="/tasks/delete/<%= task.id %>" method="POST" style="display:inline;">
+            <button class="btn waves-effect waves-light red" type="submit">Eliminar</button>
+          </form>
+        </li>
+      <% }) %>
+    </ul>
+    <a href="/tasks/new" class="btn waves-effect waves-light">Nueva Tarea</a>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script>
+    function toggleTaskCompletion(checkbox) {
+      const taskItem = checkbox.closest('.collection-item');
+      taskItem.classList.toggle('completed', checkbox.checked);
+    }
+  </script>
+</body>
+</html>
